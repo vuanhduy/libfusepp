@@ -136,7 +136,7 @@ public:
     };
 
     virtual int opendir (const string &,  struct fuse_file_info *) {
-        return -ENOSYS;
+        return 0;
     };
 
     virtual int readdir(const string &,  void *, fuse_fill_dir_t, off_t, struct fuse_file_info *, enum fuse_readdir_flags) {
@@ -152,7 +152,7 @@ public:
     };
 
     virtual void *init (struct fuse_conn_info *, struct fuse_config *) {
-        return nullptr;
+        return this;
     };
 
     virtual void destroy (void *) {};
