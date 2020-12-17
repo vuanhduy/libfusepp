@@ -20,6 +20,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+#include <iostream>
+using namespace std;
+
 #include "FusePP.h"
 
 using namespace std;
@@ -69,8 +72,6 @@ void FusePP::load_operation() {
     s_operations.bmap = bmap_cb;
     s_operations.ioctl = ioctl_cb;
     s_operations.poll = poll_cb;
-    s_operations.write_buf = write_buf_cb;
-    s_operations.read_buf = read_buf_cb;
     s_operations.flock = flock_cb;
     s_operations.fallocate = fallocate_cb;
     s_operations.copy_file_range = copy_file_range_cb;
@@ -141,6 +142,7 @@ int FusePP::read_cb (const char *path, char *buf, size_t size, off_t off, struct
 }
 
 int FusePP::write_cb (const char *path, const char *buf, size_t size, off_t off, struct fuse_file_info *fi) {
+    cout << "Test";
     INSTANCE_CALL(write, path, buf, size, off, fi);
 }
 
@@ -230,15 +232,6 @@ int FusePP::ioctl_cb (const char *path, unsigned int cmd, void *arg, struct fuse
 
 int FusePP::poll_cb (const char *path, struct fuse_file_info *fi, struct fuse_pollhandle *ph, unsigned *reventsp) {
     INSTANCE_CALL(poll, path, fi, ph, reventsp);
-}
-
-int FusePP::write_buf_cb (const char *path, struct fuse_bufvec *buf, off_t off, struct fuse_file_info *fi) {
-    INSTANCE_CALL(write_buf, path, buf, off, fi);
-}
-
-int FusePP::read_buf_cb (const char *path, struct fuse_bufvec **buf, size_t size, off_t off,
-                         struct fuse_file_info *fi) {
-    INSTANCE_CALL(read_buf, path, buf, size, off, fi);
 }
 
 int FusePP::flock_cb (const char *path, struct fuse_file_info *fi, int op) {

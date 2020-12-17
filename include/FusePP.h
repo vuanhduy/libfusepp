@@ -27,6 +27,9 @@
 
 #include <string>
 
+#include <iostream>
+using namespace std;
+
 #include <fuse.h>
 
 using namespace std;
@@ -186,14 +189,6 @@ public:
     };
 
     virtual int poll (const string &,  struct fuse_file_info *, struct fuse_pollhandle *, unsigned *) {
-        return -ENOSYS;
-    };
-
-    virtual int write_buf (const string &,  struct fuse_bufvec *, off_t, struct fuse_file_info *) {
-        return -ENOSYS;
-    };
-
-    virtual int read_buf (const string &,  struct fuse_bufvec **, size_t, off_t, struct fuse_file_info *) {
         return -ENOSYS;
     };
 
