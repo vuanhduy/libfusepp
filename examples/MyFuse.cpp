@@ -90,7 +90,7 @@ int MyFuse::create(const string &path, mode_t, struct fuse_file_info *fi) {
 int MyFuse::open(const string &path, struct fuse_file_info *fi) {
     if ((fi->flags & O_ACCMODE) == O_RDONLY) {
         for (size_t i = 0; i < m_files.size(); i++) {
-            if (path == m_files[i].name) {
+            if (path.substr(1) == m_files[i].name) {
                 // Assign file handle id to accelerate read() callback
                 fi->fh = i;
                 return EXIT_SUCCESS;
