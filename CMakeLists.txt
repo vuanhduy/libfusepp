@@ -21,5 +21,8 @@ target_link_libraries(MyFuse libfusepp)
 target_link_libraries(MyFuse ${FUSE_LIBRARIES})
 target_link_libraries(MyFuse ${GLOG_LIBRARIES})
 
-#add_executable(MyFuseExample examples/main.cpp)
-#target_link_libraries(MyFuseExample ${GLOG_LIBRARIES})
+add_executable(HelloFusePP examples/HelloFusePP.h examples/HelloFusePP.cpp)
+target_link_libraries(HelloFusePP libfusepp)
+target_link_libraries(HelloFusePP ${FUSE_LIBRARIES})
+target_link_libraries(HelloFusePP ${GLOG_LIBRARIES})
+
