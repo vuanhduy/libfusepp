@@ -30,7 +30,7 @@
 
 using namespace std;
 
-namespace io::github::vuanhduy::libfusepp::example {
+namespace me::vuanhduy::libfusepp::example {
 struct MyFuseFile {
   string name;
   string content;
@@ -50,6 +50,6 @@ private:
     int read(const string &, char *, size_t, off_t, struct fuse_file_info *) override;
     int write(const string &, const char *, size_t, off_t, struct fuse_file_info *) override;
 };  // class MyFuse
-}; // namespace io::github::vuanhduy::libfusepp::example
+}; // namespace me::vuanhduy::libfusepp::example
 
 #endif //LIBFUSEPP_EXAMPLES_MYFUSE_H_

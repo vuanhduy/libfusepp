@@ -32,7 +32,7 @@
 #include "HelloFusePP.h"
 
 using namespace std;
-namespace io::github::vuanhduy::libfusepp::example {
+namespace me::vuanhduy::libfusepp::example {
 
 /*
  * Command line options
@@ -117,9 +117,9 @@ int HelloFusePP::read(const string &path, char *buf, size_t size, off_t offset, 
     return size;
 }
 
-} // namespace io::github::vuanhduy::libfusepp::example
+} // namespace me::vuanhduy::libfusepp::example
 
-using namespace io::github::vuanhduy::libfusepp::example;
+using namespace me::vuanhduy::libfusepp::example;
 
 static void show_help(const char *progname)
 {

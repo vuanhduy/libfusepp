@@ -34,7 +34,7 @@ using namespace std;
 
 using namespace std;
 
-namespace io::github::vuanhduy::libfusepp {
+namespace me::vuanhduy::libfusepp {
 class FusePP {
 public:
     FusePP();
@@ -264,6 +264,6 @@ private:
                                        struct fuse_file_info *, off_t, size_t, int);
     static off_t lseek_cb (const char *, off_t, int, struct fuse_file_info *);
 }; //class FusePP
-}; // namespace io::github::vuanhduy::libfusepp
+}; // namespace me::vuanhduy::libfusepp
 
 #endif //LIBFUSE_FUSEPP_H_
