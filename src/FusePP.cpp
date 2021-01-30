@@ -27,7 +27,7 @@ using namespace std;
 
 using namespace std;
 
-namespace io::github::vuanhduy::libfusepp {
+namespace me::vuanhduy::libfusepp {
 
 struct fuse_operations FusePP::s_operations;
 
@@ -253,4 +253,4 @@ off_t FusePP::lseek_cb (const char *path, off_t off, int whence, struct fuse_fil
 
 #undef INSTANCE_CALL
 
-}; // namespace io::github::vuanhduy::libfusepp
+}; // namespace me::vuanhduy::libfusepp

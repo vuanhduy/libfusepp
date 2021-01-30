@@ -25,7 +25,7 @@
 
 #include "FusePP.h"
 
-namespace io::github::vuanhduy::libfusepp::example {
+namespace me::vuanhduy::libfusepp::example {
 class HelloFusePP: public FusePP {
 public:
     HelloFusePP() : FusePP() {};
@@ -38,5 +38,5 @@ private:
     int open(const string &, struct fuse_file_info *) override;
     int read(const string &, char *, size_t, off_t, struct fuse_file_info *) override;
 }; // class HelloFusePP
-}; // namespace io::github::vuanhduy::libfusepp::example
+}; // namespace me::vuanhduy::libfusepp::example
 #endif //LIBFUSEPP_EXAMPLES_HELLOFUSEPP_H_

@@ -35,7 +35,7 @@
 
 #include "MyFuse.h"
 
-namespace io::github::vuanhduy::libfusepp::example {
+namespace me::vuanhduy::libfusepp::example {
 
 int MyFuse::getattr(const string &path, struct stat *buf, struct fuse_file_info *) {
     memset(buf, 0, sizeof(struct stat));
@@ -119,9 +119,9 @@ int MyFuse::write(const string &, const char *buf, size_t size, off_t, struct fu
     return size;
 }
 
-} //namespace io::github::vuanhduy::libfusepp::example
+} //namespace me::vuanhduy::libfusepp::example
 
-using namespace io::github::vuanhduy::libfusepp::example;
+using namespace me::vuanhduy::libfusepp::example;
 
 // Executing command: GLOG_logtostderr=1 ./MyFuse -d -s -f <mount point>
 int main(int argc, char *argv[]) {

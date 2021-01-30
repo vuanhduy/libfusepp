@@ -3,15 +3,19 @@ IF (FUSE_INCLUDE_DIR AND FUSE_LIBRARIES)
     SET(FUSE_FIND_QUIETLY TRUE)
 ENDIF ()
 
-SET(FUSE_NAMES fuse3)
-
 # find includes
 FIND_PATH(FUSE_INCLUDE_DIR fuse.h
         PATHS
         /usr/local/include
         /usr/local/include/fuse3
+        /usr/local/include/fuse
         )
 
+if (APPLE)
+    SET(FUSE_NAMES libosxfuse.dylib fuse)
+else (APPLE)
+    SET(FUSE_NAMES fuse3)
+endif (APPLE)
 FIND_LIBRARY(FUSE_LIBRARIES
         NAMES ${FUSE_NAMES}
         PATHS
