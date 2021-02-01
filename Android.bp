@@ -1,0 +1,34 @@
+cc_defaults {
+    name: "me.vuanhduy.libfusepp.defaults",
+    vendor: true,
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wno-unused-parameter",
+        "-Wno-unused-variable",
+        "-Wthread-safety",
+        "-fexceptions",
+
+        "-DFUSE_USE_VERSION=34",
+    ],
+
+    shared_libs: [
+        "liblog",
+        "libcutils",
+        "libdl",
+        "libbase",
+        "libutils",
+        "libfuse",
+    ],
+}
+
+cc_library_static {
+    name: "me.vuanhduy.libfusepp",
+    stem: "libfusepp",
+    defaults: ["me.vuanhduy.libfusepp.defaults"],
+    export_include_dirs: ["include"],
+    srcs: [
+        "src/FusePP.cpp",
+    ],
+}
+

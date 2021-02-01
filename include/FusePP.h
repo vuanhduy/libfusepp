@@ -23,8 +23,6 @@
 #ifndef LIBFUSE_FUSEPP_H_
 #define LIBFUSE_FUSEPP_H_
 
-#define FUSE_USE_VERSION 31
-
 #include <string>
 
 #include <iostream>
@@ -43,6 +41,8 @@ public:
 
     FusePP& operator= (const FusePP&) = delete;
     FusePP& operator= (const FusePP&&) = delete;
+
+    virtual ~FusePP() = default;
 
     int launch(int argc, char *argv[]);
 
@@ -180,10 +180,10 @@ public:
         return -ENOSYS;
     };
 
-#if FUSE_USE_VERSION < 35
-    virtual int ioctl (const string &,  int, void *, struct fuse_file_info *, unsigned int, void *) {
-#else
+#if defined ANDROID || FUSE_USE_VERSION > 35
     virtual int ioctl (const string &,  unsigned int, void *, struct fuse_file_info *, unsigned int, void *) {
+#else
+    virtual int ioctl (const string &,  int, void *, struct fuse_file_info *, unsigned int, void *) {
 #endif
         return -ENOSYS;
     };
@@ -205,7 +205,7 @@ public:
         return -ENOSYS;
     };
 
-    virtual off_t lseek_cb (const string &,  off_t, int, struct fuse_file_info *) {
+    virtual off_t lseek (const string &,  off_t, int, struct fuse_file_info *) {
       return -ENOSYS;
     };
 
@@ -250,10 +250,10 @@ private:
     static int lock_cb (const char *, struct fuse_file_info *, int, struct flock *);
     static int utimens_cb (const char *, const struct timespec tv[2], struct fuse_file_info *);
     static int bmap_cb (const char *, size_t, uint64_t *);
-#if FUSE_USE_VERSION < 35
-    static int ioctl_cb (const char *, int, void *, struct fuse_file_info *, unsigned int, void *);
-#else
+#if defined ANDROID || FUSE_USE_VERSION > 35
     static int ioctl_cb (const char *, unsigned int, void *, struct fuse_file_info *, unsigned int, void *);
+#else
+    static int ioctl_cb (const char *, int, void *, struct fuse_file_info *, unsigned int, void *);
 #endif
     static int poll_cb (const char *, struct fuse_file_info *, struct fuse_pollhandle *, unsigned *);
     static int write_buf_cb (const char *, struct fuse_bufvec *, off_t, struct fuse_file_info *);

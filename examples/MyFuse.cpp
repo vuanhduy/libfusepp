@@ -22,16 +22,20 @@
 
 #define LOG_TAG "MyFuse"
 
-#ifndef GLOG_logtostderr
-#define GLOG_logtostderr 1
-#endif
-
 #include <cstring>
 #include <algorithm>
 
 #include <unistd.h>
 #include <sys/types.h>
+
+#ifdef ANDROID
+#include <android-base/logging.h>
+#else // ANDROID
+#ifndef GLOG_logtostderr
+#define GLOG_logtostderr 1
+#endif // GLOG_logtostderr
 #include <glog/logging.h>
+#endif // ANDROID
 
 #include "MyFuse.h"
 
@@ -125,9 +129,12 @@ using namespace me::vuanhduy::libfusepp::example;
 
 // Executing command: GLOG_logtostderr=1 ./MyFuse -d -s -f <mount point>
 int main(int argc, char *argv[]) {
+#ifndef ANDROID
     // Initialize Google’s logging library.
     google::InitGoogleLogging(LOG_TAG);
+#endif
 
     MyFuse fuse;
     return fuse.launch(argc, argv);
 }
+

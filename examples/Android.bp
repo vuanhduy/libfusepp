@@ -1,0 +1,37 @@
+cc_defaults {
+    name: "me.vuanhduy.libfusepp.examples.defaults",
+    static_libs: [
+        "me.vuanhduy.libfusepp",
+    ],
+}
+
+cc_binary {
+    name: "me.vuanhduy.libfusepp.examples.myfuse",
+    stem: "myfuse",
+    defaults: [
+        "me.vuanhduy.libfusepp.defaults",
+        "me.vuanhduy.libfusepp.examples.defaults",
+    ],
+
+    srcs: [
+        "MyFuse.cpp",
+    ],
+
+//    init_rc: ["me.vuanhduy.libfusepp.fusepp.myfuse.rc"],
+}
+
+cc_binary {
+    name: "me.vuanhduy.libfusepp.examples.hellofuse",
+    stem: "hellofuse",
+    defaults: [
+        "me.vuanhduy.libfusepp.defaults",
+        "me.vuanhduy.libfusepp.examples.defaults",
+    ],
+
+    srcs: [
+        "HelloFusePP.cpp",
+    ],
+
+//    init_rc: ["me.vuanhduy.libfusepp.fusepp.fuse.rc"],
+}
+
