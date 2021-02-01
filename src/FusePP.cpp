@@ -222,10 +222,10 @@ int FusePP::bmap_cb (const char *path, size_t blocksize, uint64_t *idx) {
     INSTANCE_CALL(bmap, path, blocksize, idx);
 }
 
-#if FUSE_USE_VERSION < 35
-int FusePP::ioctl_cb (const char *path, int cmd, void *arg, struct fuse_file_info *fi, unsigned int flags, void *data) {
-#else
+#if defined ANDROID || FUSE_USE_VERSION > 35
 int FusePP::ioctl_cb (const char *path, unsigned int cmd, void *arg, struct fuse_file_info *fi, unsigned int flags, void *data) {
+#else
+int FusePP::ioctl_cb (const char *path, int cmd, void *arg, struct fuse_file_info *fi, unsigned int flags, void *data) {
 #endif
     INSTANCE_CALL(ioctl, path, cmd, arg, fi, flags, data);
 }
@@ -248,7 +248,7 @@ ssize_t FusePP::copy_file_range_cb (const char *path_in, struct fuse_file_info *
 }
 
 off_t FusePP::lseek_cb (const char *path, off_t off, int whence, struct fuse_file_info *fi) {
-    INSTANCE_CALL(lseek_cb, path, off, whence, fi);
+    INSTANCE_CALL(lseek, path, off, whence, fi);
 }
 
 #undef INSTANCE_CALL
