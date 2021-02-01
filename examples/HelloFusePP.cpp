@@ -27,7 +27,15 @@
 
 #include <unistd.h>
 #include <sys/types.h>
+
+#ifdef ANDROID
+#include <android-base/logging.h>
+#else // ANDROID
+#ifndef GLOG_logtostderr
+#define GLOG_logtostderr 1
+#endif // GLOG_logtostderr
 #include <glog/logging.h>
+#endif // ANDROID
 
 #include "HelloFusePP.h"
 
