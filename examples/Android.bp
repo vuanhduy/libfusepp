@@ -17,7 +17,7 @@ cc_binary {
         "MyFuse.cpp",
     ],
 
-//    init_rc: ["me.vuanhduy.libfusepp.fusepp.myfuse.rc"],
+    init_rc: ["me.vuanhduy.libfusepp.examples.myfuse.rc"],
 }
 
 cc_binary {

@@ -26,4 +26,3 @@ add_executable(HelloFusePP examples/HelloFusePP.h examples/HelloFusePP.cpp)
 target_link_libraries(HelloFusePP libfusepp)
 target_link_libraries(HelloFusePP ${FUSE_LIBRARIES})
 target_link_libraries(HelloFusePP ${GLOG_LIBRARIES})
-

@@ -1,0 +1,9 @@
+on post-fs-data
+    # create test FUSE mount. Note, 0777 is the DAC set by Android and cannot be changed.
+    mkdir /mnt/vendor/myfuse_fs 0777 root root
+    start myfuse 
+
+service myfuse /vendor/bin/myfuse -s -f /mnt/vendor/myfuse_fs
+    class core
+    group root
+

@@ -11,11 +11,7 @@ FIND_PATH(FUSE_INCLUDE_DIR fuse.h
         /usr/local/include/fuse
         )
 
-if (APPLE)
-    SET(FUSE_NAMES libosxfuse.dylib fuse)
-else (APPLE)
-    SET(FUSE_NAMES fuse3)
-endif (APPLE)
+SET(FUSE_NAMES fuse3 libosxfuse.dylib)
 FIND_LIBRARY(FUSE_LIBRARIES
         NAMES ${FUSE_NAMES}
         PATHS

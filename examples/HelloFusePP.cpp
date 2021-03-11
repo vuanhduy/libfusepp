@@ -3,14 +3,14 @@
 // Copyright (c) 2020 Anh-Duy Vu
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
-//     of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-//     to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//     copies of the Software, and to permit persons to whom the Software is
+// of this software and associated documentation files (the "Software"), to
+// deal in the Software without restriction, including without limitation the
+// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+// sell copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-//     copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -20,26 +20,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <iostream>
-#include <cstring>
-#include <string>
-#include <algorithm>
-
 #include <unistd.h>
-#include <sys/types.h>
 
 #ifdef ANDROID
 #include <android-base/logging.h>
-#else // ANDROID
+#else   // ANDROID
 #ifndef GLOG_logtostderr
 #define GLOG_logtostderr 1
-#endif // GLOG_logtostderr
+#endif  // GLOG_logtostderr
 #include <glog/logging.h>
-#endif // ANDROID
+#endif  // ANDROID
 
 #include "HelloFusePP.h"
 
-using namespace std;
 namespace me::vuanhduy::libfusepp::example {
 
 /*
@@ -70,36 +63,39 @@ void *HelloFusePP::init(struct fuse_conn_info *, struct fuse_config *cfg) {
     return this;
 }
 
-int HelloFusePP::getattr(const string &path, struct stat *buf, struct fuse_file_info *) {
+int HelloFusePP::getattr(const std::string &path, struct stat *buf,
+                         struct fuse_file_info *) {
     int res = 0;
 
     memset(buf, 0, sizeof(struct stat));
     if (path == "/") {
         buf->st_mode = S_IFDIR | 0755;
         buf->st_nlink = 2;
-    } else if ( path.substr(1) == options.filename) {
+    } else if (path.substr(1) == options.filename) {
         buf->st_mode = S_IFREG | 0444;
         buf->st_nlink = 1;
         buf->st_size = strlen(options.contents);
-    } else
+    } else {
         res = -ENOENT;
+    }
 
     return res;
 }
 
-int HelloFusePP::readdir(const string &path, void *buf, fuse_fill_dir_t filler,
-                  off_t, struct fuse_file_info *, enum fuse_readdir_flags) {
+int HelloFusePP::readdir(const std::string &path, void *buf,
+                         fuse_fill_dir_t filler, off_t, struct fuse_file_info *,
+                         enum fuse_readdir_flags) {
     if (path != "/")
         return -ENOENT;
 
-    filler(buf, ".", NULL, 0, (enum fuse_fill_dir_flags)0);
-    filler(buf, "..", NULL, 0, (enum fuse_fill_dir_flags)0);
-    filler(buf, options.filename, NULL, 0, (enum fuse_fill_dir_flags)0);
+    filler(buf, ".", nullptr, 0, (enum fuse_fill_dir_flags)0);
+    filler(buf, "..", nullptr, 0, (enum fuse_fill_dir_flags)0);
+    filler(buf, options.filename, nullptr, 0, (enum fuse_fill_dir_flags)0);
 
     return 0;
 }
 
-int HelloFusePP::open(const string &path, struct fuse_file_info *fi) {
+int HelloFusePP::open(const std::string &path, struct fuse_file_info *fi) {
     if (path.substr(1) != options.filename)
         return -ENOENT;
 
@@ -109,7 +105,8 @@ int HelloFusePP::open(const string &path, struct fuse_file_info *fi) {
     return 0;
 }
 
-int HelloFusePP::read(const string &path, char *buf, size_t size, off_t offset, struct fuse_file_info *) {
+int HelloFusePP::read(const std::string &path, char *buf, size_t size,
+                      off_t offset, struct fuse_file_info *) {
     size_t len;
     if (path.substr(1) != options.filename)
         return -ENOENT;
@@ -119,26 +116,29 @@ int HelloFusePP::read(const string &path, char *buf, size_t size, off_t offset, 
         if (offset + size > len)
             size = len - offset;
         memcpy(buf, options.contents + offset, size);
-    } else
+    } else {
         size = 0;
+    }
 
-    return size;
+    return static_cast<int>(size);
 }
 
-} // namespace me::vuanhduy::libfusepp::example
+}   // namespace me::vuanhduy::libfusepp::example
 
-using namespace me::vuanhduy::libfusepp::example;
-
-static void show_help(const char *progname)
-{
-    cout << "usage: " << progname << " [options] <mountpoint>\n\n";
-    cout << "File-system specific options:\n"
+static void show_help(const char *progname) {
+    std::cout << "usage: " << progname << " [options] <mountpoint>\n\n";
+    std::cout << "File-system specific options:\n"
            "    --name=<s>          Name of the \"hello\" file\n"
            "                        (default: \"hello\")\n"
            "    --contents=<s>      Contents \"hello\" file\n"
            "                        (default \"Hello, World!\\n\")\n"
            "\n";
 }
+
+
+using me::vuanhduy::libfusepp::example::options;
+using me::vuanhduy::libfusepp::example::option_spec;
+using me::vuanhduy::libfusepp::example::HelloFusePP;
 
 // Executing command: GLOG_logtostderr=1 ./MyFuse -d -s -f <mount point>
 int main(int argc, char *argv[]) {
@@ -161,7 +161,7 @@ int main(int argc, char *argv[]) {
 	   string) */
     if (options.show_help) {
         show_help(argv[0]);
-        CHECK(fuse_opt_add_arg(&args, "--help") == 0);
+        CHECK_EQ(fuse_opt_add_arg(&args, "--help"), 0);
         args.argv[0][0] = '\0';
     }
 
